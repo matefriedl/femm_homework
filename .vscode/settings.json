@@ -1,5 +1,9 @@
 {
     "python.pythonPath": "g:\\!onedrive\\OneDrive - Széchenyi István Egyetem\\!doku\\!sze\\!msc\\4felev\\femm\\venv\\Scripts\\python.exe",
+    
+    "python.autoComplete.addBrackets": true, 
+    
+    
     "files.exclude": {
         "**/__pycache__/": true,
         "**/*.py[cod]": true,
