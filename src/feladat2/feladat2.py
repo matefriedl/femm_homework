@@ -2,6 +2,7 @@
 import femm
 from myfemm.geo import Rectangle, Point, ProblemType
 
+
 class Params:
     D1 = 13.2
     D2 = 11
@@ -89,17 +90,22 @@ femm.mi_zoomnatural()
 # We have to give the geometry a name before we can analyze it.
 femm.mi_saveas('feladat2.fem')
 
-move_vectors = []
+move_vectors = [Point(0, 0)] # do it once without moving
 for previous, current in zip(Params.core_gap, Params.core_gap[1:]):
     move_vectors.append(Point(0, previous - current))
 
 forces = {}
 for core_gap, move_vector in zip(Params.core_gap, move_vectors):
+    bottom_part.move(move_vector.x, move_vector.y)
     femm.mi_analyze()
     femm.mi_loadsolution()
-    bottom_part.select_block()
+    bottom_part.select_block_for_anal()
     forces[core_gap] = femm.mo_blockintegral(19) # 19 means force
-    bottom_part.move(move_vector.x, move_vector.y)
-    print(f'In case of {core_gap}, force is {forces[core_gap]}')
+
+    (current, voltage, flux_linkage) = femm.mo_getcircuitproperties('Circuit')
+    inductance = flux_linkage/current
+
+    print(f'In case of {core_gap:.1f} cm gap, force is {forces[core_gap]:.2f} N; inductance is {inductance*1000:.2f} mH')
+
 
 femm.closefemm()
