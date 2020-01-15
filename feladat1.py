@@ -94,7 +94,17 @@ femm.ei_zoomnatural()
 # We have to give the geometry a name before we can analyze it.
 femm.ei_saveas('feladat1.fee')
 
+femm.ei_analyze()
+femm.ei_loadsolution()
 
+voltage, stored_charge = femm.eo_getconductorproperties('Positive')
+capacitance_calcd_from_charge = stored_charge / voltage
+print(f'Capacitance calculated from charge: {capacitance_calcd_from_charge * 10**12} pF')
+
+femm.eo_selectblock(dielectric.get_midpoint().x, dielectric.get_midpoint().y)
+stored_energy = femm.eo_blockintegral(0)[0]
+capacitance_calcd_from_energy = 2 * stored_energy / (voltage*voltage)
+print(f'Capacitance calculated from energy: {capacitance_calcd_from_energy * 10**12} pF')
 
 # When the analysis is completed, FEMM can be shut down.
 femm.closefemm()
