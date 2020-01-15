@@ -1,6 +1,6 @@
 
 import femm
-import matplotlib.pyplot as plt
+from myfemm.geo import Rectangle
 
 class Params:
     Wd = 1.01
