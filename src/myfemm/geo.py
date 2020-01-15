@@ -114,7 +114,7 @@ class Rectangle:
         self.selectsegment(midpoint.x, self.origin_y)
         self.selectsegment(midpoint.x, self.origin_y + self.height)
 
-    def select_block(self):
+    def select_block_for_anal(self):
         midpoint = self.get_midpoint()
         if self.problemType is ProblemType.ElectroStatic:
             femm.eo_selectblock(midpoint.x, midpoint.y)
