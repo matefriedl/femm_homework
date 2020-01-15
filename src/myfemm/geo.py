@@ -21,6 +21,7 @@ class Rectangle:
     prefix: str = None
 
     def __init__(self, origin_x, origin_y, width, height):
+        assert isinstance(self.problemType, ProblemType)
         assert self.problemType, f"No problem type specified"
         self.origin_x = origin_x
         self.origin_y = origin_y
@@ -42,6 +43,15 @@ class Rectangle:
 
     def addsegment(self, start_x, start_y, end_x, end_y):
         return self.callCommandWithPrefix(f'addsegment({start_x},{start_y},{end_x}, {end_y})')
+
+    def addblocklabel(self, x, y):
+        return self.callCommandWithPrefix(f'addblocklabel({x},{y})')
+
+    def selectlabel(self, x, y):
+        return self.callCommandWithPrefix(f'selectlabel({x},{y})')
+
+    def clearselected(self):
+        return self.callCommandWithPrefix(f'clearselected()')
 
     def drawline(self, start_x, start_y, end_x, end_y):
         self.addnode(start_x, start_y)
@@ -69,14 +79,20 @@ class Rectangle:
         self.selectsegment(midpoint.x, self.origin_y)
         self.selectsegment(midpoint.x, self.origin_y + self.height)
         femm.ei_setsegmentprop('<None>', 0, 1, 0, 0, conductor)
-        femm.ei_clearselected()
+        self.clearselected()
 
-    def assign_material(self, material):
+    def assign_material(self, material, turns = None, circuit = None):
         midpoint = self.get_midpoint()
-        femm.ei_addblocklabel(midpoint.x, midpoint.y)
-        femm.ei_selectlabel(midpoint.x, midpoint.y)
-        femm.ei_setblockprop(material, 1, 0, 0)
-        femm.ei_clearselected()
+        self.addblocklabel(midpoint.x, midpoint.y)
+        self.selectlabel(midpoint.x, midpoint.y)
+        if self.problemType is ProblemType.ElectroStatic:
+            femm.ei_setblockprop(material, 1, 0, 0)
+        elif self.problemType is ProblemType.MagnetoStatic:
+            assert turns
+            assert circuit
+            # blockname, automesh, meshsize, incircuit, magdir, group, turns
+            femm.mi_setblockprop(material, 1, 0, circuit, 0, 0, turns)
+        self.clearselected()
 
 
 if __name__ == "__main__":
@@ -84,6 +100,7 @@ if __name__ == "__main__":
 
     # We need to create a new Electrostatic (ei) document to work on.
     femm.newdocument(ProblemType.ElectroStatic.value)
+    femm.ei_addmaterial('Air', 1, 1, 0)
 
     # Define the problem type. Units of mm; Axisymmetric; 
     # Precision of 10^(-8) for the linear solver; a placeholder of 0 for 
@@ -92,6 +109,6 @@ if __name__ == "__main__":
 
     Rectangle.problemType = ProblemType.ElectroStatic
     rectangle = Rectangle(0, 0, 10, 10)
-    rectangle.addnode(5, 5)
+    rectangle.assign_material('Air')
     femm.ei_zoomnatural()
     femm.closefemm()
