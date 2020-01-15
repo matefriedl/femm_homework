@@ -44,6 +44,8 @@ class Rectangle:
         return midpoint
 
     def assign_conductor(self, conductor):
+        assert self.problemType is ProblemType.ElectroStatic
+        
         midpoint = self.get_midpoint()
         self.selectsegment(self.origin_x, midpoint.y)
         self.selectsegment(self.origin_x + self.width, midpoint.y)
