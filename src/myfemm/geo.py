@@ -21,8 +21,7 @@ class Rectangle:
     prefix: str = None
 
     def __init__(self, origin_x, origin_y, width, height):
-        assert isinstance(self.problemType, ProblemType)
-        assert self.problemType, f"No problem type specified"
+        assert isinstance(self.problemType, ProblemType), f"No problem type specified"
         self.origin_x = origin_x
         self.origin_y = origin_y
         self.width = width
@@ -88,8 +87,8 @@ class Rectangle:
         if self.problemType is ProblemType.ElectroStatic:
             femm.ei_setblockprop(material, 1, 0, 0)
         elif self.problemType is ProblemType.MagnetoStatic:
-            assert turns
-            assert circuit
+            assert turns is not None
+            assert circuit is not None
             # blockname, automesh, meshsize, incircuit, magdir, group, turns
             femm.mi_setblockprop(material, 1, 0, circuit, 0, 0, turns)
         self.clearselected()
