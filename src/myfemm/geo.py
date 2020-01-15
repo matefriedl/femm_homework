@@ -64,13 +64,16 @@ class Rectangle:
     def clearselected(self):
         return self.callCommandWithPrefix(f'clearselected()')
 
+    def selectgroup(self, index):
+        return self.callCommandWithPrefix(f'selectgroup({index})')
+
     def drawline(self, start_x, start_y, end_x, end_y):
         self.addnode(start_x, start_y)
         self.addnode(end_x, end_y)
         self.addsegment(start_x, start_y, end_x, end_y)
 
     def move(self, dx, dy):
-        self.select_periphery()
+        self.selectgroup(self.index)
         self.callCommandWithPrefix(f'movetranslate({dx},{dy})')
         self.origin_x += dx
         self.origin_y += dy
