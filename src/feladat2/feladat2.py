@@ -1,6 +1,6 @@
 
 import femm
-from myfemm.geo import Rectangle
+from myfemm.geo import Rectangle, Point
 
 class Params:
     D1 = 13.2
@@ -21,15 +21,11 @@ class Params:
 
 femm.openfemm()
 femm.newdocument(0)
-femm.mi_probdef(0, 'millimeters', 'axi', 1.e-8, 0, 30);
+femm.mi_probdef(0, 'centimeters', 'planar', 1.e-8, Params.Depth, 30)
 
-
-
-
-
-
-
-
+d5core_origins = [Point(0,0), Point(Params.D1-Params.D5, 0)]
+for origin in d5core_origins:
+    Rectangle(origin.x, origin.y, Params.D5, Params.D2-Params.D6)
 
 
 # Now, the finished input geometry can be displayed.

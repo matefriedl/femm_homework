@@ -1,6 +1,8 @@
 
 import femm
-from myfemm.geo import Rectangle
+from myfemm.geo import Rectangle, ProblemType
+
+Rectangle.problemType = ProblemType.ElectroStatic
 
 class Params:
     Wd = 1.01
