@@ -1,0 +1,1 @@
+![](src/feladat2/feladat2.png)
