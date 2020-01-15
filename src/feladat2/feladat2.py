@@ -98,7 +98,7 @@ for core_gap, move_vector in zip(Params.core_gap, move_vectors):
     femm.mi_analyze()
     femm.mi_loadsolution()
     bottom_part.select_block()
-    forces[core_gap] = femm.mo_blockintegral(19)
+    forces[core_gap] = femm.mo_blockintegral(19) # 19 means force
     bottom_part.move(move_vector.x, move_vector.y)
     print(f'In case of {core_gap}, force is {forces[core_gap]}')
 
