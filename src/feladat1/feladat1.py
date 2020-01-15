@@ -19,7 +19,7 @@ class Params:
 femm.openfemm()
 
 # We need to create a new Electrostatic (ei) document to work on.
-femm.newdocument(1)
+femm.newdocument(ProblemType.ElectroStatic.value)
 
 # Define the problem type. Units of mm; Axisymmetric; 
 # Precision of 10^(-8) for the linear solver; a placeholder of 0 for 
