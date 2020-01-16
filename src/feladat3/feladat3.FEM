@@ -1,9 +1,9 @@
 [Format]      =  4.0
-[Frequency]   =  1000000
+[Frequency]   =  25000
 [Precision]   =  1e-008
 [MinAngle]    =  30
 [DoSmartMesh] =  1
-[Depth]       =  1
+[Depth]       =  5
 [LengthUnits] =  centimeters
 [ProblemType] =  planar
 [Coordinates] =  cartesian
