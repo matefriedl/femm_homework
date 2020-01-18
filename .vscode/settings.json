@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "g:\\!onedrive\\OneDrive - Széchenyi István Egyetem\\!doku\\!sze\\!msc\\4felev\\femm\\venv\\Scripts\\python.exe",
+    "python.pythonPath": "venv\\Scripts\\python.exe",
     
     "python.autoComplete.addBrackets": true, 
     
@@ -77,5 +77,8 @@
         "**/.dmypy.json": true,
         "**/dmypy.json": true,
         "**/.pyre/": true
-    }
+    },
+    "python.linting.pylintEnabled": false,
+    "python.linting.mypyEnabled": true,
+    "python.linting.enabled": true
 }
